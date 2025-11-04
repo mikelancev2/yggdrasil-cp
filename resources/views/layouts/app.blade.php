@@ -82,6 +82,16 @@
                         </div>
                         <div class="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
                             <div class="hidden small:flex items-center gap-x-6 h-full">
+                                @if(session('user_id'))
+                                    @php
+                                        $user = \App\Models\User::find(session('user_id'));
+                                    @endphp
+                                    @if($user && $user->role === 'admin')
+                                        <a class="bg-brand-main text-white px-4 py-2 rounded-md hover:bg-brand-green transition-colors font-bold" href="{{ route('admin.news.index') }}">
+                                            🛠️ Admin Panel
+                                        </a>
+                                    @endif
+                                @endif
                                 <a class="hover:text-ui-fg-base" data-testid="nav-account-link" href="{{ url('/account') }}">Global Account</a>
                             </div>
                         </div>

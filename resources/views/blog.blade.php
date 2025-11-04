@@ -15,27 +15,49 @@
         <a class="py-3 rounded-md font-robotoCond font-bold text-lg w-full text-center bg-white text-brand-main border-2 border-brand-main hover:bg-brand-green hover:text-white hover:border-brand-green transition-colors duration-150 ease-in-out" href="{{ url('/blog?category=patch-notes') }}">Notas de Atualização</a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Blog posts would be dynamically loaded here -->
+        @forelse($news as $post)
         <div class="border rounded-md overflow-hidden shadow hover:shadow-md transition-all">
-            <a href="{{ url('/blog/patchnotes-8') }}">
-                <div class="relative w-full h-48">
-                    <img alt="22/10 - outubro patch 3" src="{{ asset('img/patch_october3.png') }}" />
+            <a href="{{ route('blog.show', $post->slug) }}">
+                <div class="relative w-full h-48 bg-gray-200">
+                    @if($post->image)
+                        <img alt="{{ $post->title }}" src="{{ asset('storage/' . $post->image) }}" class="w-full h-full object-cover" />
+                    @else
+                        <div class="w-full h-full flex items-center justify-center text-gray-400">
+                            <span>Sem imagem</span>
+                        </div>
+                    @endif
                 </div>
             </a>
             <div class="p-5">
                 <div class="flex flex-wrap gap-2 mb-2">
-                    <a class="text-xs font-robotoCond uppercase bg-gray-200 px-2 py-1 rounded-sm hover:bg-gray-300" href="{{ url('/blog/category/patch-notes') }}">Notas de Atualização</a>
+                    @php
+                        $categoryLabels = [
+                            'guidebook' => 'Guia Oficial',
+                            'news-and-events' => 'Novidades & Eventos',
+                            'patch-notes' => 'Notas de Atualização'
+                        ];
+                    @endphp
+                    <a class="text-xs font-robotoCond uppercase bg-gray-200 px-2 py-1 rounded-sm hover:bg-gray-300" href="{{ url('/blog?category=' . $post->category) }}">
+                        {{ $categoryLabels[$post->category] ?? $post->category }}
+                    </a>
                 </div>
-                <a href="{{ url('/blog/patchnotes-8') }}">
-                    <h2 class="text-2xl font-bold font-robotoCond mb-2 hover:text-brand-main">22/10 - outubro patch 3</h2>
+                <a href="{{ route('blog.show', $post->slug) }}">
+                    <h2 class="text-2xl font-bold font-robotoCond mb-2 hover:text-brand-main">{{ $post->title }}</h2>
                 </a>
-                <p class="text-gray-500 text-sm">22/10/2025</p>
+                <p class="text-gray-500 text-sm">{{ $post->published_at->format('d/m/Y') }}</p>
             </div>
         </div>
-        <!-- Add more posts as needed -->
+        @empty
+        <div class="col-span-full text-center py-10">
+            <p class="text-gray-500 text-lg">Nenhuma notícia encontrada.</p>
+        </div>
+        @endforelse
     </div>
-    <div class="text-center mt-6">
-        <button class="bg-brand-main text-white px-4 py-2 rounded-md">Carregar mais</button>
+    
+    @if($news->hasPages())
+    <div class="mt-8">
+        {{ $news->links() }}
     </div>
+    @endif
 </main>
 @endsection

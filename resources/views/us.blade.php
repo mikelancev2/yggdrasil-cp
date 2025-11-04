@@ -264,9 +264,9 @@
             <div class="w-full md:w-1/2 order-2 md:order-1 z-0">
                 <div class="space-y-6">
                     <div class="border border-gray-300 rounded-lg shadow-sm mb-4 bg-white overflow-hidden">
-                        <button class="w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
+                        <button class="faq-button w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
                             <span class="font-robotoCond text-l">What is Myth of Yggdrasil</span>
-                            <span class="text-l">+</span>
+                            <span class="faq-icon text-l">+</span>
                         </button>
                         <div class="grid transition-all duration-500 ease-in-out grid-rows-[0fr] opacity-0">
                             <div class="overflow-hidden px-4 pb-0 text-start">
@@ -279,9 +279,9 @@
                         </div>
                     </div>
                     <div class="border border-gray-300 rounded-lg shadow-sm mb-4 bg-white overflow-hidden">
-                        <button class="w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
+                        <button class="faq-button w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
                             <span class="font-robotoCond text-l">Who is behind Myth?</span>
-                            <span class="text-l">+</span>
+                            <span class="faq-icon text-l">+</span>
                         </button>
                         <div class="grid transition-all duration-500 ease-in-out grid-rows-[0fr] opacity-0">
                             <div class="overflow-hidden px-4 pb-0 text-start">
@@ -293,9 +293,9 @@
                         </div>
                     </div>
                     <div class="border border-gray-300 rounded-lg shadow-sm mb-4 bg-white overflow-hidden">
-                        <button class="w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
+                        <button class="faq-button w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
                             <span class="font-robotoCond text-l">Is there any trade using real money?</span>
-                            <span class="text-l">+</span>
+                            <span class="faq-icon text-l">+</span>
                         </button>
                         <div class="grid transition-all duration-500 ease-in-out grid-rows-[0fr] opacity-0">
                             <div class="overflow-hidden px-4 pb-0 text-start">
@@ -308,9 +308,9 @@
                         </div>
                     </div>
                     <div class="border border-gray-300 rounded-lg shadow-sm mb-4 bg-white overflow-hidden">
-                        <button class="w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
+                        <button class="faq-button w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
                             <span class="font-robotoCond text-l">Where can I find more information about the game?</span>
-                            <span class="text-l">+</span>
+                            <span class="faq-icon text-l">+</span>
                         </button>
                         <div class="grid transition-all duration-500 ease-in-out grid-rows-[0fr] opacity-0">
                             <div class="overflow-hidden px-4 pb-0 text-start">
@@ -322,9 +322,9 @@
                         </div>
                     </div>
                     <div class="border border-gray-300 rounded-lg shadow-sm mb-4 bg-white overflow-hidden">
-                        <button class="w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
+                        <button class="faq-button w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
                             <span class="font-robotoCond text-l">How can I contact the Myth Team?</span>
-                            <span class="text-l">+</span>
+                            <span class="faq-icon text-l">+</span>
                         </button>
                         <div class="grid transition-all duration-500 ease-in-out grid-rows-[0fr] opacity-0">
                             <div class="overflow-hidden px-4 pb-0 text-start">
@@ -336,9 +336,9 @@
                         </div>
                     </div>
                     <div class="border border-gray-300 rounded-lg shadow-sm mb-4 bg-white overflow-hidden">
-                        <button class="w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
+                        <button class="faq-button w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
                             <span class="font-robotoCond text-l">How can I report a bug or issue?</span>
-                            <span class="text-l">+</span>
+                            <span class="faq-icon text-l">+</span>
                         </button>
                         <div class="grid transition-all duration-500 ease-in-out grid-rows-[0fr] opacity-0">
                             <div class="overflow-hidden px-4 pb-0 text-start">
@@ -349,9 +349,9 @@
                         </div>
                     </div>
                     <div class="border border-gray-300 rounded-lg shadow-sm mb-4 bg-white overflow-hidden">
-                        <button class="w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
+                        <button class="faq-button w-full text-left p-3 font-black text-brand-main flex justify-between items-center">
                             <span class="font-robotoCond text-l">What are the benefits of creating content for Myth?</span>
-                            <span class="text-l">+</span>
+                            <span class="faq-icon text-l">+</span>
                         </button>
                         <div class="grid transition-all duration-500 ease-in-out grid-rows-[0fr] opacity-0">
                             <div class="overflow-hidden px-4 pb-0 text-start">
@@ -381,4 +381,28 @@
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // FAQ accordion functionality
+        const faqButtons = document.querySelectorAll('.faq-button');
+        
+        faqButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('.faq-icon');
+                
+                if (content.classList.contains('grid-rows-[0fr]')) {
+                    content.classList.remove('grid-rows-[0fr]', 'opacity-0');
+                    content.classList.add('grid-rows-[1fr]', 'opacity-100');
+                    icon.textContent = '−';
+                } else {
+                    content.classList.remove('grid-rows-[1fr]', 'opacity-100');
+                    content.classList.add('grid-rows-[0fr]', 'opacity-0');
+                    icon.textContent = '+';
+                }
+            });
+        });
+    });
+</script>
 @endsection
