@@ -3,7 +3,7 @@
 @section('title', 'Nova Notícia - Admin')
 
 @section('content')
-<main class="max-w-[900px] mx-auto p-5">
+<div class="max-w-[1200px] mx-auto p-5">
     <div class="mb-6">
         <a href="{{ route('admin.news.index') }}" class="text-brand-main hover:underline font-robotoCond">← Voltar para gerenciar notícias</a>
     </div>
@@ -20,7 +20,7 @@
     </div>
     @endif
 
-    <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow p-8">
+    <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow p-8 max-w-full">
         @csrf
 
         <div class="mb-6">
@@ -91,4 +91,5 @@ document.getElementById('image').addEventListener('change', function(e) {
     }
 });
 </script>
+</div>
 @endsection
