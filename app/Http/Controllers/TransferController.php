@@ -51,8 +51,8 @@ class TransferController extends Controller
         // Validação
         $request->validate([
             'account_id' => 'required|integer',
-            'ygg_points' => 'nullable|integer|min:0',
-            'vote_points' => 'nullable|integer|min:0',
+            'ygg_points' => 'nullable|integer|min:1',
+            'vote_points' => 'nullable|integer|min:1',
         ]);
 
         $accountId = $request->account_id;

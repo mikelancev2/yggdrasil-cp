@@ -158,54 +158,89 @@
                                 </select>
                             </div>
 
-                            <!-- Grid com os inputs -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <!-- Ygg Points -->
-                                <div>
-                                    <label for="ygg_points" class="block text-sm font-medium text-gray-700 font-robotoCond mb-2">
-                                        Ygg Points
-                                    </label>
-                                    <input 
-                                        type="number" 
-                                        name="ygg_points" 
-                                        id="ygg_points"
-                                        value="{{ old('ygg_points', 0) }}"
-                                        min="0"
-                                        max="{{ $yggPoints }}"
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-brand-main focus:border-brand-main font-robotoCond text-sm"
-                                        placeholder="0"
+                            <!-- Seleção de Tipo de Ponto -->
+                            <div class="mb-4">
+                                <label for="point_type" class="block text-sm font-medium text-gray-700 font-robotoCond mb-2">
+                                    Tipo de Pontos para Transferir *
+                                </label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button 
+                                        type="button" 
+                                        id="btnYggPoints"
+                                        class="point-type-btn px-4 py-3 border-2 rounded-md font-robotoCond font-semibold transition-all border-yellow-500 bg-yellow-100 ring-2 ring-yellow-300"
+                                        data-type="ygg"
                                     >
-                                    <p class="mt-1 text-xs text-gray-500 font-robotoCond">
-                                        Max: {{ number_format($yggPoints) }} | Você receberá: <span id="yggCashPreview" class="font-bold text-brand-main">0</span> Cash
-                                    </p>
-                                </div>
-
-                                <!-- Vote Points -->
-                                <div>
-                                    <label for="vote_points" class="block text-sm font-medium text-gray-700 font-robotoCond mb-2">
-                                        Vote Points
-                                    </label>
-                                    <input 
-                                        type="number" 
-                                        name="vote_points" 
-                                        id="vote_points"
-                                        value="{{ old('vote_points', 0) }}"
-                                        min="0"
-                                        max="{{ $votePoints }}"
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-brand-main focus:border-brand-main font-robotoCond text-sm"
-                                        placeholder="0"
+                                        <div class="flex items-center justify-center gap-2">
+                                            <span>💎 Ygg Points</span>
+                                        </div>
+                                        <div class="text-xs text-gray-600 mt-1">1:100 Cash</div>
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        id="btnVotePoints"
+                                        class="point-type-btn px-4 py-3 border-2 rounded-md font-robotoCond font-semibold text-gray-700 transition-all border-gray-300 bg-white hover:bg-gray-50"
+                                        data-type="vote"
                                     >
-                                    <p class="mt-1 text-xs text-gray-500 font-robotoCond">
-                                        Max: {{ number_format($votePoints) }} | Você receberá: <span id="voteCashPreview" class="font-bold text-brand-main">0</span> Cash
-                                    </p>
+                                        <div class="flex items-center justify-center gap-2">
+                                            <span>🗳️ Vote Points</span>
+                                        </div>
+                                        <div class="text-xs text-gray-600 mt-1">1:1 Cash</div>
+                                    </button>
                                 </div>
                             </div>
 
+                            <!-- Campo Ygg Points (visível por padrão) -->
+                            <div id="yggPointsField" class="mb-4 point-field">
+                                <label for="ygg_points" class="block text-sm font-medium text-gray-700 font-robotoCond mb-2">
+                                    Quantidade de Ygg Points
+                                </label>
+                                <input 
+                                    type="number" 
+                                    name="ygg_points" 
+                                    id="ygg_points"
+                                    value="{{ old('ygg_points', '') }}"
+                                    min="1"
+                                    max="{{ $yggPoints }}"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-brand-main focus:border-brand-main font-robotoCond text-sm"
+                                    placeholder="Digite a quantidade de Ygg Points"
+                                >
+                                <p class="mt-2 text-xs text-gray-500 font-robotoCond">
+                                    Disponível: <span class="font-bold text-yellow-700">{{ number_format($yggPoints) }}</span> Ygg Points
+                                </p>
+                                <p class="mt-1 text-xs text-gray-600 font-robotoCond">
+                                    Você receberá: <span id="yggCashPreview" class="font-bold text-green-700 text-base">0</span> Cash Points
+                                </p>
+                            </div>
+
+                            <!-- Campo Vote Points (oculto inicialmente) -->
+                            <div id="votePointsField" class="mb-4 point-field hidden">
+                                <label for="vote_points" class="block text-sm font-medium text-gray-700 font-robotoCond mb-2">
+                                    Quantidade de Vote Points
+                                </label>
+                                <input 
+                                    type="number" 
+                                    name="vote_points" 
+                                    id="vote_points"
+                                    value="{{ old('vote_points', '') }}"
+                                    min="1"
+                                    max="{{ $votePoints }}"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-brand-main focus:border-brand-main font-robotoCond text-sm"
+                                    placeholder="Digite a quantidade de Vote Points"
+                                >
+                                <p class="mt-2 text-xs text-gray-500 font-robotoCond">
+                                    Disponível: <span class="font-bold text-blue-700">{{ number_format($votePoints) }}</span> Vote Points
+                                </p>
+                                <p class="mt-1 text-xs text-gray-600 font-robotoCond">
+                                    Você receberá: <span id="voteCashPreview" class="font-bold text-green-700 text-base">0</span> Cash Points
+                                </p>
+                            </div>
+
                             <!-- Total Preview -->
-                            <div class="mb-6 p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200">
-                                <div class="flex justify-between items-center">
-                                    <span class="font-robotoCond text-gray-700 text-sm">Total Cash Points</span>
-                                    <span id="totalCashPreview" class="font-bold text-2xl text-green-700 font-robotoCond">0</span>
+                            <div id="totalPreviewCard" class="mb-6 p-4 rounded-lg border-2 transition-all bg-gradient-to-r from-yellow-50 to-yellow-100 border-yellow-300">
+                                <div class="text-center">
+                                    <p class="font-robotoCond text-gray-700 text-sm mb-1">Total a Receber</p>
+                                    <p id="totalCashPreview" class="font-bold text-3xl text-green-700 font-robotoCond">0</p>
+                                    <p id="pointTypeLabel" class="text-xs text-gray-600 font-robotoCond mt-1">Ygg Points</p>
                                 </div>
                             </div>
 
@@ -250,10 +285,83 @@ document.addEventListener('DOMContentLoaded', function() {
     const yggPreview = document.getElementById('yggCashPreview');
     const votePreview = document.getElementById('voteCashPreview');
     const totalPreview = document.getElementById('totalCashPreview');
+    const pointTypeLabel = document.getElementById('pointTypeLabel');
+    const totalPreviewCard = document.getElementById('totalPreviewCard');
+    
+    const btnYggPoints = document.getElementById('btnYggPoints');
+    const btnVotePoints = document.getElementById('btnVotePoints');
+    const yggPointsField = document.getElementById('yggPointsField');
+    const votePointsField = document.getElementById('votePointsField');
+    
+    let currentType = 'ygg'; // Tipo ativo por padrão
 
+    // Função para alternar tipo de ponto
+    function switchPointType(type) {
+        currentType = type;
+        
+        if (type === 'ygg') {
+            // Mostrar campo Ygg Points
+            yggPointsField.classList.remove('hidden');
+            votePointsField.classList.add('hidden');
+            
+            // Estilizar botão Ygg como ativo
+            btnYggPoints.className = 'point-type-btn px-4 py-3 border-2 rounded-md font-robotoCond font-semibold transition-all border-yellow-500 bg-yellow-100 ring-2 ring-yellow-300';
+            
+            // Estilizar botão Vote como inativo
+            btnVotePoints.className = 'point-type-btn px-4 py-3 border-2 rounded-md font-robotoCond font-semibold text-gray-700 transition-all border-gray-300 bg-white hover:bg-gray-50';
+            
+            // Mudar fundo do card para amarelo claro
+            totalPreviewCard.className = 'mb-6 p-4 rounded-lg border-2 transition-all bg-gradient-to-r from-yellow-50 to-yellow-100 border-yellow-300';
+            
+            // Atualizar label
+            pointTypeLabel.textContent = 'Ygg Points';
+            
+            // Resetar Vote Points
+            voteInput.value = '';
+        } else {
+            // Mostrar campo Vote Points
+            votePointsField.classList.remove('hidden');
+            yggPointsField.classList.add('hidden');
+            
+            // Estilizar botão Vote como ativo
+            btnVotePoints.className = 'point-type-btn px-4 py-3 border-2 rounded-md font-robotoCond font-semibold transition-all border-blue-500 bg-blue-100 ring-2 ring-blue-300';
+            
+            // Estilizar botão Ygg como inativo
+            btnYggPoints.className = 'point-type-btn px-4 py-3 border-2 rounded-md font-robotoCond font-semibold text-gray-700 transition-all border-gray-300 bg-white hover:bg-yellow-50';
+            
+            // Mudar fundo do card para azul claro
+            totalPreviewCard.className = 'mb-6 p-4 rounded-lg border-2 transition-all bg-gradient-to-r from-blue-50 to-blue-100 border-blue-300';
+            
+            // Atualizar label
+            pointTypeLabel.textContent = 'Vote Points';
+            
+            // Resetar Ygg Points
+            yggInput.value = '';
+        }
+        
+        updatePreviews();
+    }
+
+    // Event listeners para os botões
+    btnYggPoints.addEventListener('click', function() {
+        switchPointType('ygg');
+    });
+    
+    btnVotePoints.addEventListener('click', function() {
+        switchPointType('vote');
+    });
+
+    // Função para atualizar previews
     function updatePreviews() {
-        const yggPoints = parseInt(yggInput.value) || 0;
-        const votePoints = parseInt(voteInput.value) || 0;
+        let yggPoints = 0;
+        let votePoints = 0;
+        
+        // Pegar apenas o valor do tipo selecionado
+        if (currentType === 'ygg') {
+            yggPoints = parseInt(yggInput.value) || 0;
+        } else {
+            votePoints = parseInt(voteInput.value) || 0;
+        }
         
         const yggCash = yggPoints * 100;
         const voteCash = votePoints * 1;
@@ -264,8 +372,12 @@ document.addEventListener('DOMContentLoaded', function() {
         totalPreview.textContent = total.toLocaleString();
     }
 
+    // Event listeners para os inputs
     yggInput.addEventListener('input', updatePreviews);
     voteInput.addEventListener('input', updatePreviews);
+    
+    // Inicializar com Ygg Points selecionado
+    switchPointType('ygg');
 });
 </script>
 @endsection
