@@ -1,91 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Histórico da Roleta')
+@section('title', 'Referências - Myth of Yggdrasil')
+@section('description', 'Compartilhe seu link e ganhe pontos')
 
 @section('content')
-<style>
-    .history-card {
-        background: white;
-        border-radius: 8px;
-        padding: 24px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .history-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .history-table thead {
-        background: #f8f9fa;
-    }
-
-    .history-table th {
-        padding: 12px;
-        text-align: left;
-        font-weight: 600;
-        color: #495057;
-        border-bottom: 2px solid #dee2e6;
-    }
-
-    .history-table td {
-        padding: 12px;
-        color: #212529;
-        border-bottom: 1px solid #dee2e6;
-    }
-
-    .history-table tbody tr:last-child td {
-        border-bottom: none;
-    }
-
-    .history-table tbody tr:hover {
-        background: #f8f9fa;
-    }
-
-    .item-cell {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .item-cell img {
-        width: 40px;
-        height: 40px;
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 60px 20px;
-        color: #6c757d;
-    }
-
-    .empty-state svg {
-        width: 64px;
-        height: 64px;
-        margin-bottom: 16px;
-        color: #adb5bd;
-    }
-
-    .back-button {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: #f39c12;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        margin-bottom: 20px;
-    }
-
-    .back-button:hover {
-        background: #e67e22;
-        transform: translateY(-1px);
-    }
-</style>
-
 <div class="flex-1 small:py-12" data-testid="account-page">
     <div class="flex-1 h-full max-w-5xl mx-auto bg-white flex flex-col">
         <div class="grid grid-cols-1 small:grid-cols-[240px_1fr] py-12">
@@ -134,9 +52,9 @@
                                 <li><a class="text-brand-main hover:underline hover:text-ui-fg-base font-robotoCond uppercase" href="/account/game-accounts">Game Accounts</a></li>
                                 <li><a class="text-brand-main hover:underline hover:text-ui-fg-base font-robotoCond uppercase" href="/account/ygg-points">Ygg Points</a></li>
                                 <li><a class="text-brand-main hover:underline hover:text-ui-fg-base font-robotoCond uppercase" href="/account/votes">Votos</a></li>
-                                <li><a class="hover:underline hover:text-ui-fg-base font-semibold uppercase font-robotoCond text-brand-main" href="/account/roulette">Roleta</a></li>
+                                <li><a class="text-brand-main hover:underline hover:text-ui-fg-base font-robotoCond uppercase" href="/account/roulette">Roleta</a></li>
                                 <li><a class="text-brand-main hover:underline hover:text-ui-fg-base font-robotoCond uppercase" href="/account/orders">Transactions</a></li>
-                                <li><a class="text-brand-main hover:underline hover:text-ui-fg-base font-robotoCond uppercase" href="/account/referrals">References</a></li>
+                                <li><a class="hover:underline hover:text-ui-fg-base font-semibold uppercase font-robotoCond text-brand-main" href="/account/referrals">References</a></li>
                                 <li><a class="text-brand-main hover:underline hover:text-ui-fg-base font-robotoCond uppercase" href="/download">Download</a></li>
                                 <li><a class="text-brand-main hover:underline hover:text-ui-fg-base font-robotoCond uppercase" href="/account/profile">Profile</a></li>
                                 <li>
@@ -160,68 +78,134 @@
             </div>
 
             <!-- Main Content -->
-            <div class="flex-1">
+            <div class="flex-1 px-8">
                 <div class="w-full">
-                    <!-- Page Header -->
-                    <div class="mb-6 flex items-center justify-between">
-                        <div>
-                            <h1 class="text-2xl font-bold text-gray-900">📜 Histórico da Roleta</h1>
-                            <p class="text-gray-600 mt-1">Visualize todas as suas rolagens anteriores</p>
+                    <!-- Header -->
+                    <header class="mb-6">
+                        <h1 class="text-3xl font-core uppercase text-center text-brand-main">Programa de Referências</h1>
+                        <p class="text-base-regular font-robotoCond text-center text-gray-600 mt-2">Compartilhe seu link e ganhe pontos a cada novo jogador!</p>
+                    </header>
+
+                    <!-- Estatísticas -->
+                    <div class="mb-6 grid grid-cols-1 gap-4">
+                        <div class="p-6 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg border border-purple-200 text-center">
+                            <div class="flex flex-col items-center">
+                                <span class="font-robotoCond text-gray-700 text-sm uppercase mb-2">Total de Referências</span>
+                                <span class="font-bold text-5xl text-purple-700 font-core">{{ $totalReferrals }}</span>
+                                <p class="text-xs text-gray-600 font-robotoCond mt-2">{{ $totalReferrals === 1 ? 'pessoa se cadastrou' : 'pessoas se cadastraram' }} usando seu link</p>
+                            </div>
                         </div>
-                        <a href="{{ route('roulette.index') }}" class="back-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>
-                            Voltar
-                        </a>
                     </div>
 
-                    <!-- History Table -->
-                    <div class="history-card">
-                        @if ($history->count() > 0)
-                            <table class="history-table">
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Personagem</th>
-                                        <th>Data</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($history as $item)
-                                        <tr>
-                                            <td>
-                                                <div class="item-cell">
-                                                    <img src="https://static.divine-pride.net/images/items/item/{{ $item->item_id }}.png" 
-                                                         alt="{{ $item->item_name }}"
-                                                         onerror="this.src='data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;40&quot; height=&quot;40&quot;><text x=&quot;20&quot; y=&quot;20&quot; text-anchor=&quot;middle&quot; dominant-baseline=&quot;middle&quot; font-size=&quot;25&quot;>❓</text></svg>'">
-                                                    <span class="font-medium">{{ $item->item_name }}</span>
-                                                </div>
-                                            </td>
-                                            <td>Char ID: {{ $item->char_id ?? 'N/A' }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($item->spin_date)->format('d/m/Y H:i:s') }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                    <!-- Link de Referência -->
+                    <div class="mb-6 bg-white border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-xl font-core uppercase text-brand-main mb-4 text-center">Seu Link de Referência</h2>
+                        
+                        <div class="bg-gray-50 p-4 rounded-md border border-gray-200 mb-4">
+                            <div class="flex items-center justify-between gap-4">
+                                <div class="flex-1 overflow-hidden">
+                                    <p class="text-xs font-robotoCond text-gray-600 mb-1">Link:</p>
+                                    <input 
+                                        type="text" 
+                                        id="referralLink" 
+                                        value="{{ $referralLink }}" 
+                                        readonly 
+                                        class="w-full px-3 py-2 bg-white border border-gray-300 rounded font-robotoCond text-sm text-gray-700"
+                                    />
+                                </div>
+                                <button 
+                                    onclick="copyReferralLink()" 
+                                    class="px-4 py-2 bg-brand-main text-white rounded-md hover:bg-brand-green transition-colors font-robotoCond font-semibold whitespace-nowrap"
+                                >
+                                    📋 Copiar
+                                </button>
+                            </div>
+                        </div>
 
-                            <!-- Pagination -->
-                            <div class="mt-6">
-                                {{ $history->links() }}
+                        <div class="bg-blue-50 p-4 rounded-md border border-blue-200">
+                            <p class="text-sm font-robotoCond text-blue-800">
+                                <strong>💡 Dica:</strong> Compartilhe este link com seus amigos nas redes sociais, Discord, ou onde quiser! Cada pessoa que criar uma conta usando seu link conta como 1 ponto de referência.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Lista dos Últimos 5 Cadastros -->
+                    @if($totalReferrals > 0)
+                        <div class="bg-white border border-gray-200 rounded-lg p-6">
+                            <h2 class="text-xl font-core uppercase text-brand-main mb-4 text-center">Últimos Cadastros</h2>
+                            
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead class="bg-gray-50 border-b border-gray-200">
+                                        <tr>
+                                            <th class="px-4 py-3 text-left text-xs font-robotoCond font-semibold text-gray-700 uppercase tracking-wider">#</th>
+                                            <th class="px-4 py-3 text-left text-xs font-robotoCond font-semibold text-gray-700 uppercase tracking-wider">Email</th>
+                                            <th class="px-4 py-3 text-left text-xs font-robotoCond font-semibold text-gray-700 uppercase tracking-wider">Data</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        @foreach($recentReferrals as $index => $referral)
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-4 py-3 text-sm font-robotoCond text-gray-900">{{ $index + 1 }}</td>
+                                                <td class="px-4 py-3 text-sm font-robotoCond text-gray-900">{{ $referral->email }}</td>
+                                                <td class="px-4 py-3 text-sm font-robotoCond text-gray-600">{{ $referral->created_at->format('d/m/Y H:i') }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-                        @else
-                            <div class="empty-state">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                                </svg>
-                                <h2 class="text-xl font-semibold text-gray-700 mb-2">Nenhum histórico ainda</h2>
-                                <p class="text-gray-600">Você ainda não girou a roleta. Que tal tentar a sorte?</p>
-                            </div>
-                        @endif
+
+                            @if($totalReferrals > 5)
+                                <p class="text-center text-sm text-gray-600 font-robotoCond mt-4">
+                                    Mostrando os 5 cadastros mais recentes de {{ $totalReferrals }} no total
+                                </p>
+                            @endif
+                        </div>
+                    @else
+                        <div class="text-center py-8 bg-gray-50 rounded-lg border border-gray-200">
+                            <p class="text-gray-600 font-robotoCond mb-2">Você ainda não possui referências.</p>
+                            <p class="text-sm text-gray-500 font-robotoCond">Compartilhe seu link para começar a acumular pontos!</p>
+                        </div>
+                    @endif
+
+                    <!-- Informações Adicionais -->
+                    <div class="mt-6 bg-yellow-50 p-4 rounded-md border border-yellow-200">
+                        <h3 class="text-sm font-robotoCond font-semibold text-yellow-800 mb-2">📢 Como funciona?</h3>
+                        <ul class="text-sm font-robotoCond text-yellow-800 space-y-1 list-disc list-inside">
+                            <li>Compartilhe seu link de referência com amigos</li>
+                            <li>Quando alguém criar uma conta usando seu link, você ganha 1 ponto</li>
+                            <li>Os administradores podem premiar os jogadores com mais referências</li>
+                            <li>Não há limite de referências!</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function copyReferralLink() {
+        const linkInput = document.getElementById('referralLink');
+        linkInput.select();
+        linkInput.setSelectionRange(0, 99999); // Para mobile
+        
+        navigator.clipboard.writeText(linkInput.value).then(function() {
+            // Feedback visual
+            const button = event.target.closest('button');
+            const originalText = button.innerHTML;
+            button.innerHTML = '✓ Copiado!';
+            button.classList.add('bg-green-600');
+            button.classList.remove('bg-brand-main');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('bg-green-600');
+                button.classList.add('bg-brand-main');
+            }, 2000);
+        }, function(err) {
+            alert('Erro ao copiar: ' + err);
+        });
+    }
+</script>
 @endsection

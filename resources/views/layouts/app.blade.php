@@ -108,6 +108,9 @@
                                                     <a href="{{ route('admin.roulette.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-robotoCond">
                                                         🎰 Gerenciar Roleta
                                                     </a>
+                                                    <a href="{{ route('admin.referrals.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-robotoCond">
+                                                        👥 Gerenciar Referências
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

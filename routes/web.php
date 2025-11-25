@@ -7,7 +7,9 @@ use App\Http\Controllers\VoteController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\RouletteController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\Admin\RouletteController as AdminRouletteController;
+use App\Http\Controllers\Admin\ReferralController as AdminReferralController;
 
 Route::get('/', function () {
     return view('home');
@@ -42,6 +44,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('roulette/{id}/edit', [AdminRouletteController::class, 'edit'])->name('roulette.edit');
     Route::put('roulette/{id}', [AdminRouletteController::class, 'update'])->name('roulette.update');
     Route::delete('roulette/{id}', [AdminRouletteController::class, 'destroy'])->name('roulette.destroy');
+    
+    // Referral management routes
+    Route::get('referrals', [AdminReferralController::class, 'index'])->name('referrals.index');
+    Route::post('referrals/toggle', [AdminReferralController::class, 'toggle'])->name('referrals.toggle');
+    Route::get('referrals/{userId}', [AdminReferralController::class, 'show'])->name('referrals.show');
 });
 
 Route::get('/account', [AccountController::class, 'show']);
@@ -62,6 +69,7 @@ Route::post('/account/roulette/select-account', [RouletteController::class, 'sel
 Route::post('/account/roulette/spin', [RouletteController::class, 'spin'])->name('roulette.spin')->middleware('throttle:20,1');
 Route::get('/account/roulette/history', [RouletteController::class, 'history'])->name('roulette.history');
 Route::get('/account/orders', [AccountController::class, 'orders']);
+Route::get('/account/referrals', [ReferralController::class, 'index'])->name('referrals.index');
 Route::get('/account/transfer', [TransferController::class, 'index'])->name('transfer.index');
 Route::post('/account/transfer', [TransferController::class, 'transfer'])->name('transfer.store')->middleware('throttle:10,1');
 Route::post('/logout', [AccountController::class, 'logout']);

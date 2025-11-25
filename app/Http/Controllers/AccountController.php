@@ -70,6 +70,23 @@ class AccountController extends Controller
         \Log::info('Validação passou, prosseguindo com criação da conta');
 
         try {
+            // Verificar se há código de referência
+            $referredBy = null;
+            if ($request->has('ref') && !empty($request->ref)) {
+                // Verificar se o sistema de referências está ativo
+                $referralSystemEnabled = \DB::connection('mysql')->table('settings')
+                    ->where('key', 'referral_system_enabled')
+                    ->value('value') ?? '1';
+                
+                if ($referralSystemEnabled === '1') {
+                    $referrer = User::where('referral_code', $request->ref)->first();
+                    if ($referrer) {
+                        $referredBy = $referrer->id;
+                        \Log::info('Usuário registrado com código de referência: ' . $request->ref);
+                    }
+                }
+            }
+
             // Criar usuário na tabela users
             $user = User::create([
                 'name' => $request->first_name . ' ' . $request->last_name,
@@ -78,6 +95,7 @@ class AccountController extends Controller
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'phone' => $request->phone,
+                'referred_by' => $referredBy,
             ]);
 
             return redirect('/account')->with('message', 'Conta criada com sucesso! Você pode fazer login agora.')->with('message_type', 'success');
